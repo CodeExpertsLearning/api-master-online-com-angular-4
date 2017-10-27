@@ -49,4 +49,8 @@ $app->register(new \Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider(), a
 	'orm.default_cache' => 'array'
 ));
 
+$app->register(new JDesrosiers\Silex\Provider\CorsServiceProvider(), [
+	"cors.allowOrigin" => "*",
+]);
+
 $app->run();

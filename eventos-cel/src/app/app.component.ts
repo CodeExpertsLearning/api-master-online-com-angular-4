@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(public http: HttpService) {}
 
   ngOnInit() {
-    this.http.get('pokemon/1/')
+    this.http.get('events')
               .subscribe(res => this.pokemon = res);
   }
 
