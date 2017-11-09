@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
@@ -20,6 +20,24 @@ export class HttpService {
 
   getBy(endpoint: string, param: any) {
     return this.http.get(`${this.mainUrl}${endpoint}/${param}`)
+      .map(res => {
+        return res.json();
+      });
+  }
+
+  post(endpoint: string, data: Object) {
+    let headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let opt = new RequestOptions({ headers: headers});
+
+    let urlData = new URLSearchParams();
+
+    for(let k in data) {
+      urlData.append(k, data[k]);
+    }
+
+    return this.http.post(`${this.mainUrl}${endpoint}`, urlData, opt)
       .map(res => {
         return res.json();
       });
