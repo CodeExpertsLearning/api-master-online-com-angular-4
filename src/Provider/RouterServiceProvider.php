@@ -31,7 +31,7 @@ class RouterServiceProvider implements ServiceProviderInterface
 	     */
 	    $app->get('/users', 'user:index');
 	    $app->get('/users/{id}', 'user:get');
-	    $app->post('/users', 'user:save')->before($verifyToken);
+	    $app->post('/users', 'user:save');
 	    $app->put('/users', 'user:update');
 	    $app->delete('/users/{id}', 'user:delete');
 
