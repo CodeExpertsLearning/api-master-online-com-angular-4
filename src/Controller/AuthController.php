@@ -20,34 +20,34 @@ class AuthController
 
 	public function login(Request $request)
 	{
-		$data = $request->request->all();
+		 $data = $request->request->all();
 
-		#validations
+		 #validations
 
-		$user = $this->app['orm.em']
-			->getRepository('CodeExperts\Entity\User')
-			->findOneByEmail($data['email']);
+		 $user = $this->app['orm.em']
+		 	->getRepository('CodeExperts\Entity\User')
+		 	->findOneByEmail($data['email']);
 
-		if(!$user
-		   || $data['email'] != $user->getEmail()) {
-			return $this->app->json(['msg' => 'Usuário ou senha incorretos!'],
-				401);
-		}
+		 if(!$user
+		    || $data['email'] != $user->getEmail()) {
+		 	return $this->app->json(['msg' => 'Usuário ou senha incorretos!'],
+		 		401);
+		 }
 
-		$passwdService = new PasswordService();
+		 $passwdService = new PasswordService();
 
-		if(!$passwdService->isValidPassword($data['password'], $user->getPassword())) {
-			return $this->app->json(json_encode(['msg' => 'Usuário ou senha incorretos!']), 401);
-		}
+		 if(!$passwdService->isValidPassword($data['password'], $user->getPassword())) {
+		 	return $this->app->json(['msg' => 'Usuário ou senha incorretos!'], 401);
+		 }
 
-		$jwt = $this->app['jwt'];
+		 $jwt = $this->app['jwt'];
 
-		$jwt->setApplication($this->app);
+		 $jwt->setApplication($this->app);
 
-		$jwt->setPayloadData([
-			'username' => $user->getEmail()
-		]);
+		 $jwt->setPayloadData([
+		 	'username' => $user->getEmail()
+		 ]);
 
-		return $this->app->json(['token' => (string) $jwt->generateToken()]);
+		return $this->app->json(['token' => (string) $jwt->generateToken()], 200);
 	}
 }

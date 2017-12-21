@@ -12,9 +12,13 @@ $app = new Application();
 
 $app['debug'] = true;
 
+$app->register(new JDesrosiers\Silex\Provider\CorsServiceProvider(), [
+	"cors.allowOrigin" => "http://localhost:4200"
+]);
+
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
-$app->register(new ControllerServiceProvider());
 $app->register(new RouterServiceProvider());
+$app->register(new ControllerServiceProvider());
 
 $app->register(new JWTServiceProvider(), [
 	'iss' => $_SERVER['SERVER_NAME'],
@@ -48,9 +52,5 @@ $app->register(new \Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider(), a
 	'orm.auto_generate_proxies' => true,
 	'orm.default_cache' => 'array'
 ));
-
-$app->register(new JDesrosiers\Silex\Provider\CorsServiceProvider(), [
-	"cors.allowOrigin" => "*",
-]);
 
 $app->run();

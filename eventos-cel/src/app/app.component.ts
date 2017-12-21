@@ -12,11 +12,6 @@ export class AppComponent {
 
   constructor(public http: HttpService) {}
 
-  ngOnInit() {
-    this.http.get('events')
-              .subscribe(res => this.pokemon = res);
-  }
-
   hello() {
     alert('App Component');
   }

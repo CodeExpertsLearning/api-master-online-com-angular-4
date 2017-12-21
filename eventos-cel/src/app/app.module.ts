@@ -15,6 +15,8 @@ import { HttpService } from './http.service';
 import { EventsComponent } from './events/events.component';
 import { EventSingleComponent } from './events/event-single/event-single.component';
 import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+import { StorageService } from './storage.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { SignupComponent } from './signup/signup.component';
     MeucomponentComponent,
     EventsComponent,
     EventSingleComponent,
-    SignupComponent
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { SignupComponent } from './signup/signup.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [HttpService],
+  providers: [HttpService, StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

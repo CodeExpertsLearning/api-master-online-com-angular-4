@@ -13,6 +13,5 @@ class BaseController
 	public function __construct(Application $app)
 	{
 		$this->app = $app;
-		header("Access-Control-Allow-Origin: *");
 	}
 }

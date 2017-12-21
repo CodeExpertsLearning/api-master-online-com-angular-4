@@ -4,6 +4,7 @@ namespace CodeExperts\Provider;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RouterServiceProvider implements ServiceProviderInterface
 {
@@ -48,6 +49,7 @@ class RouterServiceProvider implements ServiceProviderInterface
 	     * Subscription
 	     */
 	    $app->post('/events/{event_id}/subscription', 'subscription:index');
-    }
 
+	    $app["cors-enabled"]($app);
+    }
 }
