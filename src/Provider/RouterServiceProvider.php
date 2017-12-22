@@ -31,6 +31,7 @@ class RouterServiceProvider implements ServiceProviderInterface
 	     * User Routes
 	     */
 	    $app->get('/users', 'user:index');
+	    $app->get('/users/events', 'user:userEvents')->before($verifyToken);
 	    $app->get('/users/{id}', 'user:get');
 	    $app->post('/users', 'user:save');
 	    $app->put('/users', 'user:update');
@@ -48,7 +49,7 @@ class RouterServiceProvider implements ServiceProviderInterface
 	    /**
 	     * Subscription
 	     */
-	    $app->post('/events/{event_id}/subscription', 'subscription:index');
+	    $app->post('/events/{event_id}/subscription', 'subscription:index')->before($verifyToken);
 
 	    $app["cors-enabled"]($app);
     }

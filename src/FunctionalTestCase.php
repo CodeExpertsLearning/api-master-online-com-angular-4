@@ -96,7 +96,7 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
 	protected function createClient()
 	{
 		$client = new Client(array(
-			'base_uri' => 'http://localhost:8000',
+			'base_uri' => 'http://localhost:3030',
 			'request.options' => array(
 				'exceptions' => false,
 			),

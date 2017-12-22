@@ -29,9 +29,6 @@ class SubscriptionControllerTest extends FunctionalTestCase
 
 		$users = $client->request('GET', '/users');
 
-		$userId    = json_decode($users->getBody())[0]->id;
-
-
 		$data = array(
 			'title' => '8.PHP - Fórum Nacional de Profissionais PHP do MA',
 			'content' => 'Fórum Nacional de Profissionais PHP - MA',
@@ -56,7 +53,9 @@ class SubscriptionControllerTest extends FunctionalTestCase
 		$eventId = json_decode($event->getBody())[0]->id;
 
 		$response = $client->request('POST', '/events/' . $eventId . '/subscription', [
-			'form_params' => ['user_id' => $userId]
+			'headers' => [
+				'Authorization' => 'Bearer ' . $token
+			]
 		]);
 
 		$this->assertEquals(200, $response->getStatusCode());

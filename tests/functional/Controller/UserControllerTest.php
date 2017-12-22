@@ -100,4 +100,43 @@ class UserControllerTest extends FunctionalTestCase
 		$this->assertEquals(200, $response->getStatusCode());
 		$this->assertEquals('User deleted with success', json_decode($response->getBody())->msg);
 	}
+
+	public function testGetUserEvents()
+	{
+		$response = $this->makeLogin();
+
+		$client = $this->createClient();
+
+		$token = json_decode($response->getBody())->token;
+
+		$event = $client->request('GET', '/events');
+
+		$eventId = json_decode($event->getBody())[0]->id;
+
+		$response = $client->request('POST', '/events/' . $eventId . '/subscription', [
+			'headers' => [
+				'Authorization' => 'Bearer ' . $token
+			]
+		]);
+
+		$response = $client->request('GET', '/users/events', [
+			'headers' => [
+				'Authorization' => 'Bearer ' . $token
+			]
+		]);
+
+		$this->assertEquals(200, $response->getStatusCode());
+
+		$this->assertObjectHasAttribute('title', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('content', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('description', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('venue', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('address', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('start_date', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('end_date', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('start_time', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('end_time', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('is_active', json_decode($response->getBody())[0]);
+		$this->assertObjectHasAttribute('created_at', json_decode($response->getBody())[0]);
+	}
 }

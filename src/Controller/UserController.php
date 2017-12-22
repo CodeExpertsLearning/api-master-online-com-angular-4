@@ -2,10 +2,12 @@
 namespace CodeExperts\Controller;
 
 use CodeExperts\Entity\User;
+use CodeExperts\Security\ExtractUser;
 use CodeExperts\Service\EMService;
 use CodeExperts\Service\PasswordService;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
+use Lcobucci\JWT\Parser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -124,4 +126,27 @@ class UserController extends BaseController
 
 		return $this->app->json(['msg' => 'User deleted with success'], 200);
 	}
+
+	public function userEvents(Request $request)
+	{
+		$userData = (new ExtractUser(new Parser()))
+			->extract($request->headers->get('Authorization'));
+
+		$doctrine = $this->app['orm.em'];
+
+		$userEvents = $doctrine
+			->getRepository('CodeExperts\Entity\User')
+			->findOneByEmail($userData['username']->getValue());
+
+		$build = SerializerBuilder::create()->build();
+
+		$response = new Response($build->serialize(
+			$userEvents->getEventCollection(),
+			'json'), 200);
+
+		$response->headers->set('Content-Type', 'application/json');
+
+		return $response;
+	}
+
 }
