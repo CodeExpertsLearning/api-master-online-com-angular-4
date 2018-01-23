@@ -17,6 +17,11 @@ import { EventSingleComponent } from './events/event-single/event-single.compone
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { StorageService } from './storage.service';
+import { MakeSubscriptionComponent } from './make-subscription/make-subscription.component';
+import { ConfirmComponent } from './make-subscription/confirm/confirm.component';
+import { PainelComponent } from './painel/painel.component';
+import { UserEventsComponent } from './painel/user-events/user-events.component';
+import { AuthGuard } from './guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -25,7 +30,11 @@ import { StorageService } from './storage.service';
     EventsComponent,
     EventSingleComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    MakeSubscriptionComponent,
+    ConfirmComponent,
+    PainelComponent,
+    UserEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +44,7 @@ import { StorageService } from './storage.service';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [HttpService, StorageService],
+  providers: [HttpService, StorageService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

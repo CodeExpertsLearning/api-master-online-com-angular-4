@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from './../http.service';
 import { StorageService } from './../storage.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private http: HttpService,
-    private storage: StorageService
+    private storage: StorageService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -24,6 +27,16 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.http.post('auth/login', this.user)
-            .subscribe(res => { this.storage.set('token', res.token); });
+            .subscribe(res => {
+              this.storage.set('token', res.token);
+              this.route.queryParams.subscribe(params => {
+                if (params.to == 'subscription_confirm') {
+                  return this.router.navigate(['/make-subscription']);
+                } else {
+                  return this.router.navigate(['/painel']);
+                }
+              });
+
+            });
   }
 }

@@ -11,8 +11,16 @@ export class HttpService {
 
   constructor(public http: Http) { }
 
-  get(endpoint) {
-    return this.http.get(`${this.mainUrl}${endpoint}`)
+  get(endpoint, token?: string) {
+    let headers = new Headers();
+
+    if (token) {
+      headers.append('Authorization', 'Bearer ' + token);
+    }
+
+    let opt = new RequestOptions({ headers: headers });
+
+    return this.http.get(`${this.mainUrl}${endpoint}`, opt)
              .map(res => {
                 return res.json();
              });
@@ -25,9 +33,13 @@ export class HttpService {
       });
   }
 
-  post(endpoint: string, data: Object) {
+  post(endpoint: string, data: Object, token?:string) {
     let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    if(token) {
+      headers.append('Authorization', 'Bearer ' + token);
+    }
 
     let opt = new RequestOptions({ headers: headers});
 
