@@ -22,6 +22,7 @@ import { ConfirmComponent } from './make-subscription/confirm/confirm.component'
 import { PainelComponent } from './painel/painel.component';
 import { UserEventsComponent } from './painel/user-events/user-events.component';
 import { AuthGuard } from './guard/auth.guard';
+import { EventComponent } from './events/event/event.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AuthGuard } from './guard/auth.guard';
     MakeSubscriptionComponent,
     ConfirmComponent,
     PainelComponent,
-    UserEventsComponent
+    UserEventsComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,

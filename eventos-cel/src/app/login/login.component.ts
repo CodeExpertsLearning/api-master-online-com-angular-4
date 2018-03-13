@@ -3,6 +3,8 @@ import { HttpService } from './../http.service';
 import { StorageService } from './../storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
+declare let toastr;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -30,6 +32,8 @@ export class LoginComponent implements OnInit {
             .subscribe(res => {
               this.storage.set('token', res.token);
               this.route.queryParams.subscribe(params => {
+                toastr.success('Login Efetuado com Sucesso', 'Sucesso');
+
                 if (params.to == 'subscription_confirm') {
                   return this.router.navigate(['/make-subscription']);
                 } else {

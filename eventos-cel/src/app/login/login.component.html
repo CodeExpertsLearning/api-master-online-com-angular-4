@@ -4,21 +4,27 @@
   </div>
 </div>
 <div class="row">
-  <form class="col s12">
+  <form class="col s12" #formLogin="ngForm">
     <div class="row">
       <div class="input-field col s12">
-        <input type="email" class="validate" [(ngModel)]="user.email" name="email">
+        <input type="email" class="" [(ngModel)]="user.email" name="email" required
+        #email="ngModel" [ngClass]="{'invalid': !email.valid && email.touched}"
+        >
+        <span *ngIf="!password.valid && password.touched">*Campo requerido!</span>
         <label for="email">Email</label>
       </div>
     </div>
     <div class="row">
       <div class="input-field col s12">
-        <input type="password" class="validate" [(ngModel)]="user.password" name="password">
+        <input type="password" class="" [(ngModel)]="user.password" name="password" required
+         #password="ngModel" [ngClass]="{'invalid': !password.valid && password.touched}"
+        >
+        <span *ngIf="!password.valid && password.touched">*Campo requerido!</span>
         <label for="password">Password</label>
       </div>
     </div>
     <div class="row">
-      <a class="waves-effect waves-light btn-large" (click)="login()">
+      <a class="waves-effect waves-light btn-large" (click)="login()" [ngClass]="{'disabled': !formLogin.valid}">
         Login
       </a>
     </div>

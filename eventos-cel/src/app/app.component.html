@@ -8,8 +8,11 @@
       <li routerLinkActive="active">
         <a routerLink="signup">Cadastro</a>
       </li>
-      <li routerLinkActive="active">
+      <li routerLinkActive="active" *ngIf="!changeMenu">
         <a routerLink="login">Login</a>
+      </li>
+      <li routerLinkActive="active" *ngIf="changeMenu">
+        <a routerLink="painel/events">Painel</a>
       </li>
     </ul>
   </div>

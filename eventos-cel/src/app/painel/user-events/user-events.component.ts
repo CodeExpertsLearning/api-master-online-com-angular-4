@@ -1,6 +1,7 @@
 import { HttpService } from './../../http.service';
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-events',
@@ -13,7 +14,8 @@ export class UserEventsComponent implements OnInit {
 
   constructor(
     private httpService: HttpService,
-    private storage: StorageService
+    private storage: StorageService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -24,4 +26,8 @@ export class UserEventsComponent implements OnInit {
     });
   }
 
+  logout() {
+    this.storage.remove('token');
+    return this.router.navigate(['/']);
+  }
 }

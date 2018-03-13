@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { ErrorHandler } from './app.error-handler';
 
 @Injectable()
 export class HttpService {
@@ -23,14 +25,14 @@ export class HttpService {
     return this.http.get(`${this.mainUrl}${endpoint}`, opt)
              .map(res => {
                 return res.json();
-             });
+      }).catch(ErrorHandler.handleError);
   }
 
   getBy(endpoint: string, param: any) {
     return this.http.get(`${this.mainUrl}${endpoint}/${param}`)
       .map(res => {
         return res.json();
-      });
+      }).catch(ErrorHandler.handleError);
   }
 
   post(endpoint: string, data: Object, token?:string) {
@@ -52,6 +54,6 @@ export class HttpService {
     return this.http.post(`${this.mainUrl}${endpoint}`, urlData, opt)
       .map(res => {
         return res.json();
-      });
+      }).catch(ErrorHandler.handleError);
   }
 }

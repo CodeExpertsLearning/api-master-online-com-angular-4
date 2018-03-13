@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HttpService } from './../http.service';
+declare let toastr;
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +24,10 @@ export class SignupComponent implements OnInit {
 
   signup() {
     this.http.post('users', this.user)
-             .subscribe(res => console.log(res));
+             .subscribe(res => {
+               toastr.success(res.msg, 'Sucesso');
+
+             });
   }
 
 }
